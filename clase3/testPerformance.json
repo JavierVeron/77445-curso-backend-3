@@ -1,0 +1,87 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.Usuarios (Test + Registración + Login)": 200,
+      "vusers.created": 200,
+      "http.requests": 200,
+      "plugins.metrics-by-endpoint./api/users/test.errors.ECONNREFUSED": 200,
+      "errors.ECONNREFUSED": 200,
+      "vusers.failed": 200
+    },
+    "rates": {
+      "http.request_rate": 10
+    },
+    "firstCounterAt": 1779153892026,
+    "lastCounterAt": 1779153911479,
+    "firstMetricAt": 1779153892026,
+    "lastMetricAt": 1779153911479,
+    "period": 1779153910000,
+    "summaries": {},
+    "histograms": {}
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.Usuarios (Test + Registración + Login)": 80,
+        "vusers.created": 80,
+        "http.requests": 80,
+        "plugins.metrics-by-endpoint./api/users/test.errors.ECONNREFUSED": 80,
+        "errors.ECONNREFUSED": 80,
+        "vusers.failed": 80
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1779153892026,
+      "lastCounterAt": 1779153899480,
+      "firstMetricAt": 1779153892026,
+      "lastMetricAt": 1779153899480,
+      "period": "1779153890000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Usuarios (Test + Registración + Login)": 100,
+        "vusers.created": 100,
+        "http.requests": 100,
+        "plugins.metrics-by-endpoint./api/users/test.errors.ECONNREFUSED": 100,
+        "errors.ECONNREFUSED": 100,
+        "vusers.failed": 100
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1779153900024,
+      "lastCounterAt": 1779153909479,
+      "firstMetricAt": 1779153900024,
+      "lastMetricAt": 1779153909479,
+      "period": "1779153900000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Usuarios (Test + Registración + Login)": 20,
+        "vusers.created": 20,
+        "http.requests": 20,
+        "plugins.metrics-by-endpoint./api/users/test.errors.ECONNREFUSED": 20,
+        "errors.ECONNREFUSED": 20,
+        "vusers.failed": 20
+      },
+      "rates": {
+        "http.request_rate": 20
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1779153910024,
+      "lastCounterAt": 1779153911479,
+      "firstMetricAt": 1779153910024,
+      "lastMetricAt": 1779153911479,
+      "period": "1779153910000",
+      "summaries": {},
+      "histograms": {}
+    }
+  ]
+}
