@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(addLogger);
 
-mongoose.connect("mongodb+srv://javierveron:Javier12345@codercluster.d33hyf3.mongodb.net/clase3?appName=CoderCluster")
+mongoose.connect("mongodb+srv://javierveron:<password>@codercluster.d33hyf3.mongodb.net/clase3?appName=CoderCluster")
 .then(() => console.log('Conectado a MongoDB de forma exitosa'))
 .catch(err => console.error('Error al conectar a la base de datos:', err));
 
