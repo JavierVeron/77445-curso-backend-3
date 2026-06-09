@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Quinta Comidas — API Docs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+:root{
+  --font-sans:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'JetBrains Mono','Fira Code',monospace;
+  --color-text-primary:#111827;
+  --color-text-secondary:#6b7280;
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f9fafb;
+  --color-border-tertiary:#e5e7eb;
+  --border-radius-lg:12px;
+  --border-radius-md:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:#eef2f7;background-image:radial-gradient(ellipse at 10% 75%,rgba(209,250,229,0.55) 0%,transparent 50%),radial-gradient(ellipse at 92% 8%,rgba(224,231,255,0.55) 0%,transparent 50%);background-attachment:fixed;color:var(--color-text-primary);min-height:100vh}
+.page-container{max-width:940px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.api-root{padding:0.25rem 0;max-width:100%}
+.header-banner{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-right:6px;vertical-align:middle}
+.badge-oas{background:#E1F5EE;color:#0F6E56}
+.badge-v{background:#EEEDFE;color:#3C3489}
+.server-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:5px 12px;margin-top:10px}
+.dot-green{width:7px;height:7px;border-radius:50%;background:#1D9E75;flex-shrink:0}
+.section{margin-bottom:12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.section-header{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--color-background-primary);cursor:pointer;user-select:none}
+.section-header:hover{background:var(--color-background-secondary)}
+.tag-label{font-size:13px;font-weight:500;flex:1}
+.tag-count{font-size:11px;color:var(--color-text-secondary)}
+.chevron{font-size:13px;color:var(--color-text-secondary);transition:transform 0.2s}
+.chevron.open{transform:rotate(180deg)}
+.endpoints-list{border-top:0.5px solid var(--color-border-tertiary)}
+.ep{border-bottom:0.5px solid var(--color-border-tertiary)}
+.ep:last-child{border-bottom:none}
+.ep-row{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;background:var(--color-background-primary)}
+.ep-row:hover{background:var(--color-background-secondary)}
+.method{display:inline-block;width:62px;text-align:center;font-size:11px;font-weight:500;padding:4px 0;border-radius:4px;flex-shrink:0}
+.m-get{background:#E6F1FB;color:#185FA5}
+.m-post{background:#EAF3DE;color:#3B6D11}
+.m-put{background:#FAEEDA;color:#854F0B}
+.m-patch{background:#FBEAF0;color:#993556}
+.m-delete{background:#FCEBEB;color:#A32D2D}
+.ep-path{font-size:13px;font-family:var(--font-mono);color:var(--color-text-primary);flex:1}
+.ep-summary{font-size:12px;color:var(--color-text-secondary);text-align:right}
+.ep-detail{display:none;padding:16px;background:var(--color-background-secondary);border-top:0.5px solid var(--color-border-tertiary)}
+.ep-detail.open{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.detail-block{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px}
+.detail-block-full{grid-column:1/-1}
+.detail-title{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
+.param-row{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.param-row:last-child{border-bottom:none}
+.param-name{font-size:12px;font-family:var(--font-mono);color:var(--color-text-primary);min-width:120px}
+.param-type{font-size:11px;color:#185FA5;background:#E6F1FB;padding:1px 7px;border-radius:3px}
+.param-req{font-size:11px;color:#A32D2D;background:#FCEBEB;padding:1px 7px;border-radius:3px}
+.param-opt{font-size:11px;color:#5F5E5A;background:#F1EFE8;padding:1px 7px;border-radius:3px}
+.param-desc{font-size:12px;color:var(--color-text-secondary);flex:1}
+.resp-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.resp-row:last-child{border-bottom:none}
+.resp-code{font-size:12px;font-family:var(--font-mono);font-weight:500;min-width:44px}
+.code-2{color:#3B6D11}.code-4{color:#854F0B}.code-5{color:#A32D2D}
+.resp-desc{font-size:12px;color:var(--color-text-secondary)}
+.auth-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#EEEDFE;color:#3C3489;border-radius:4px;padding:2px 8px;margin-bottom:6px}
+.schema-block{font-size:12px;font-family:var(--font-mono);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.models-section{margin-top:1.5rem}
+.models-header{font-size:14px;font-weight:500;margin-bottom:10px;color:var(--color-text-primary)}
+.model-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:10px}
+.model-name{font-size:13px;font-weight:500;font-family:var(--font-mono);margin-bottom:8px}
+.model-table{width:100%;font-size:12px;border-collapse:collapse}
+.model-table th{text-align:left;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.04em;padding:4px 8px 8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.model-table td{padding:5px 8px 5px 0;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top}
+.model-table tr:last-child td{border-bottom:none}
+.ft{font-family:var(--font-mono);color:#185FA5}
+.sec-div{height:0.5px;background:var(--color-border-tertiary);margin:1.5rem 0}
+
+/* ── enhanced design overrides ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+
+.topbar{background:linear-gradient(100deg,#0f172a 0%,#1e3a5f 55%,#0a5c43 100%);color:white;padding:1rem 1.75rem;margin-bottom:2.25rem;border-radius:16px;box-shadow:0 8px 32px rgba(15,23,42,0.22),0 2px 8px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar-brand{display:flex;align-items:center;gap:12px}
+.topbar-icon{font-size:1.5rem;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.3))}
+.topbar-name{font-size:1.05rem;font-weight:700;letter-spacing:-0.02em}
+.topbar-divider{width:1px;height:18px;background:rgba(255,255,255,0.2)}
+.topbar-sub{font-size:0.7rem;opacity:0.5;letter-spacing:0.07em;text-transform:uppercase}
+.topbar-meta{display:flex;align-items:center;gap:9px}
+.topbar-pill{font-size:11px;font-weight:500;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.9);border-radius:20px;padding:3px 11px}
+.topbar-link{font-size:12px;color:rgba(255,255,255,0.65);text-decoration:none;border:1px solid rgba(255,255,255,0.18);border-radius:8px;padding:4px 11px;transition:all 0.15s}
+.topbar-link:hover{color:white;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.3)}
+
+.header-banner{background:linear-gradient(135deg,#f0f9ff 0%,#ecfdf5 55%,#faf5ff 100%);border:1px solid #c7d2fe;border-radius:var(--border-radius-lg);padding:1.75rem 2rem;margin-bottom:1.75rem;box-shadow:0 4px 24px rgba(99,102,241,0.08),0 1px 4px rgba(0,0,0,0.04)}
+
+.section{margin-bottom:12px;border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.05),0 1px 2px rgba(0,0,0,0.04);transition:box-shadow 0.2s}
+.section:hover{box-shadow:0 5px 18px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.05)}
+
+.model-card{background:var(--color-background-primary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.models-header{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--color-text-primary);letter-spacing:-0.01em}
+.model-name{font-size:13px;font-weight:600;font-family:var(--font-mono);margin-bottom:10px;color:#1e3a5f}
+
+.schema-block{font-size:11.5px;font-family:var(--font-mono);background:#1e293b;color:#94a3b8;border:none;border-radius:var(--border-radius-md);padding:12px 15px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
+
+.ep-path{font-size:13px;font-family:var(--font-mono);color:var(--color-text-primary);flex:1;font-weight:500}
+.ep-summary{font-size:12px;color:var(--color-text-secondary);text-align:right;flex-shrink:0}
+
+.section-header{display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--color-background-primary);cursor:pointer;user-select:none;border-bottom:0 solid transparent;transition:background 0.15s}
+.tag-label{font-size:13px;font-weight:600;flex:1;letter-spacing:-0.01em}
+</style>
+</head>
+<body>
+<div class="page-container">
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="topbar-name">La Quinta Comidas</span>
+    <span class="topbar-divider"></span>
+    <span class="topbar-sub">API Reference</span>
+  </div>
+  <div class="topbar-meta">
+    <span class="topbar-pill">OAS 3.0</span>
+    <span class="topbar-pill">v1.0</span>
+    <a class="topbar-link" href="https://laquintaapp-laquinta-web.gzsmus.easypanel.host" target="_blank" rel="noopener noreferrer">Live ↗</a>
+  </div>
+</header>
+<h2 class="sr-only">La Quinta Comidas — Documentación de API REST</h2>
+<div class="api-root">
+
+<div class="header-banner">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+    <span style="font-size:20px;font-weight:500">La Quinta Comidas — API</span>
+    <span class="badge badge-v">v1.0</span>
+    <span class="badge badge-oas">OAS 3.0</span>
+  </div>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin-top:8px">API REST para gestión de pedidos, productos y usuarios de la plataforma de delivery de comida.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+    <div class="server-pill"><span class="dot-green"></span><span style="color:var(--color-text-secondary)">Base URL:</span><code style="font-size:12px">https://laquintaapp-laquinta-web.gzsmus.easypanel.host/api/v1</code></div>
+  </div>
+  <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+    <span class="auth-badge"><i class="ti ti-lock" style="font-size:13px" aria-hidden="true"></i> Bearer JWT</span>
+    <span style="font-size:12px;color:var(--color-text-secondary);align-self:center">— requerido en rutas protegidas</span>
+  </div>
+</div>
+
+<div id="sections"></div>
+
+<div class="sec-div"></div>
+
+<div class="models-section">
+  <div class="models-header"><i class="ti ti-box" style="font-size:15px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>Modelos de datos</div>
+
+  <div class="model-card">
+    <div class="model-name">User</div>
+    <table class="model-table">
+      <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr><td>id</td><td class="ft">string (uuid)</td><td>Identificador único</td></tr>
+      <tr><td>name</td><td class="ft">string</td><td>Nombre completo</td></tr>
+      <tr><td>email</td><td class="ft">string</td><td>Email único</td></tr>
+      <tr><td>phone</td><td class="ft">string?</td><td>Teléfono de contacto</td></tr>
+      <tr><td>address</td><td class="ft">string?</td><td>Dirección de entrega por defecto</td></tr>
+      <tr><td>role</td><td class="ft">enum: customer | admin</td><td>Rol en el sistema</td></tr>
+      <tr><td>createdAt</td><td class="ft">string (ISO 8601)</td><td>Fecha de registro</td></tr>
+    </table>
+  </div>
+
+  <div class="model-card">
+    <div class="model-name">Product</div>
+    <table class="model-table">
+      <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr><td>id</td><td class="ft">string (uuid)</td><td>Identificador único</td></tr>
+      <tr><td>name</td><td class="ft">string</td><td>Nombre del plato</td></tr>
+      <tr><td>description</td><td class="ft">string?</td><td>Descripción del producto</td></tr>
+      <tr><td>category</td><td class="ft">string</td><td>Categoría (ej. "Viandas", "Pack")</td></tr>
+      <tr><td>pricePerKg</td><td class="ft">number</td><td>Precio por kilo en ARS</td></tr>
+      <tr><td>imageUrl</td><td class="ft">string?</td><td>URL de imagen del producto</td></tr>
+      <tr><td>available</td><td class="ft">boolean</td><td>Si el producto está activo</td></tr>
+    </table>
+  </div>
+
+  <div class="model-card">
+    <div class="model-name">Order</div>
+    <table class="model-table">
+      <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr><td>id</td><td class="ft">string (uuid)</td><td>Identificador del pedido</td></tr>
+      <tr><td>userId</td><td class="ft">string (uuid)</td><td>Usuario que realizó el pedido</td></tr>
+      <tr><td>items</td><td class="ft">OrderItem[]</td><td>Lista de ítems del pedido</td></tr>
+      <tr><td>deliveryAddress</td><td class="ft">string</td><td>Dirección de entrega</td></tr>
+      <tr><td>status</td><td class="ft">enum</td><td>pending | confirmed | preparing | delivered | cancelled</td></tr>
+      <tr><td>totalAmount</td><td class="ft">number</td><td>Total en ARS</td></tr>
+      <tr><td>paymentMethod</td><td class="ft">enum: cash | transfer</td><td>Método de pago</td></tr>
+      <tr><td>notes</td><td class="ft">string?</td><td>Notas adicionales</td></tr>
+      <tr><td>createdAt</td><td class="ft">string (ISO 8601)</td><td>Fecha del pedido</td></tr>
+    </table>
+  </div>
+
+  <div class="model-card">
+    <div class="model-name">OrderItem</div>
+    <table class="model-table">
+      <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr><td>productId</td><td class="ft">string (uuid)</td><td>Referencia al producto</td></tr>
+      <tr><td>productName</td><td class="ft">string</td><td>Nombre (snapshot al momento del pedido)</td></tr>
+      <tr><td>quantity</td><td class="ft">number</td><td>Cantidad en kg</td></tr>
+      <tr><td>unitPrice</td><td class="ft">number</td><td>Precio/kg al momento del pedido</td></tr>
+      <tr><td>subtotal</td><td class="ft">number</td><td>quantity × unitPrice</td></tr>
+    </table>
+  </div>
+
+  <div class="model-card">
+    <div class="model-name">Category</div>
+    <table class="model-table">
+      <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+      <tr><td>id</td><td class="ft">string (uuid)</td><td>Identificador único</td></tr>
+      <tr><td>name</td><td class="ft">string</td><td>Nombre de la categoría</td></tr>
+      <tr><td>slug</td><td class="ft">string</td><td>Identificador URL-friendly</td></tr>
+      <tr><td>sortOrder</td><td class="ft">number</td><td>Orden de aparición en el menú</td></tr>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<script>
+const data = [
+  {
+    tag:"Auth", icon:"ti-shield-lock", color:"#534AB7",
+    endpoints:[
+      {method:"POST",path:"/auth/register",summary:"Registrar nuevo usuario",auth:false,
+        params:[],
+        body:[
+          {name:"name",type:"string",req:true,desc:"Nombre completo"},
+          {name:"email",type:"string",req:true,desc:"Email único"},
+          {name:"password",type:"string",req:true,desc:"Mínimo 8 caracteres"},
+          {name:"phone",type:"string",req:false,desc:"Teléfono de contacto"},
+        ],
+        responses:[
+          {code:"201",cls:"code-2",desc:"Usuario creado. Devuelve objeto User + token JWT"},
+          {code:"400",cls:"code-4",desc:"Datos inválidos o email ya registrado"},
+        ],
+        example:`{ "name": "Juan Pérez", "email": "juan@mail.com", "password": "secret123", "phone": "2614001234" }`
+      },
+      {method:"POST",path:"/auth/login",summary:"Iniciar sesión",auth:false,
+        params:[],
+        body:[
+          {name:"email",type:"string",req:true,desc:"Email registrado"},
+          {name:"password",type:"string",req:true,desc:"Contraseña del usuario"},
+        ],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Login exitoso. Devuelve token JWT y datos del usuario"},
+          {code:"401",cls:"code-4",desc:"Credenciales incorrectas"},
+        ],
+        example:`{ "email": "juan@mail.com", "password": "secret123" }`
+      },
+      {method:"POST",path:"/auth/logout",summary:"Cerrar sesión",auth:true,
+        params:[],body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Sesión cerrada, token invalidado"},
+          {code:"401",cls:"code-4",desc:"No autenticado"},
+        ],
+        example:null
+      },
+      {method:"POST",path:"/auth/refresh",summary:"Renovar token JWT",auth:false,
+        params:[],
+        body:[{name:"refreshToken",type:"string",req:true,desc:"Token de refresco"}],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Nuevo access token generado"},
+          {code:"401",cls:"code-4",desc:"Refresh token inválido o expirado"},
+        ],
+        example:`{ "refreshToken": "eyJhbGc..." }`
+      },
+    ]
+  },
+  {
+    tag:"Productos", icon:"ti-salad", color:"#3B6D11",
+    endpoints:[
+      {method:"GET",path:"/products",summary:"Listar productos",auth:false,
+        params:[
+          {name:"category",type:"string",req:false,desc:"Filtrar por slug de categoría"},
+          {name:"available",type:"boolean",req:false,desc:"Solo productos disponibles (default: true)"},
+          {name:"search",type:"string",req:false,desc:"Búsqueda por nombre"},
+        ],
+        body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Array de Product[]"},
+        ],
+        example:null
+      },
+      {method:"GET",path:"/products/:id",summary:"Obtener producto por ID",auth:false,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID del producto (path param)"}],
+        body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Objeto Product"},
+          {code:"404",cls:"code-4",desc:"Producto no encontrado"},
+        ],
+        example:null
+      },
+      {method:"POST",path:"/products",summary:"Crear producto",auth:true,
+        params:[],
+        body:[
+          {name:"name",type:"string",req:true,desc:"Nombre del plato"},
+          {name:"description",type:"string",req:false,desc:"Descripción"},
+          {name:"category",type:"string",req:true,desc:"Nombre o ID de categoría"},
+          {name:"pricePerKg",type:"number",req:true,desc:"Precio por kilo en ARS"},
+          {name:"imageUrl",type:"string",req:false,desc:"URL de imagen"},
+          {name:"available",type:"boolean",req:false,desc:"Default: true"},
+        ],
+        responses:[
+          {code:"201",cls:"code-2",desc:"Producto creado"},
+          {code:"400",cls:"code-4",desc:"Datos inválidos"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:`{ "name": "Milanesa napolitana", "category": "viandas", "pricePerKg": 9500, "available": true }`
+      },
+      {method:"PUT",path:"/products/:id",summary:"Actualizar producto completo",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID del producto (path param)"}],
+        body:[
+          {name:"name",type:"string",req:true,desc:"Nombre del plato"},
+          {name:"pricePerKg",type:"number",req:true,desc:"Precio por kilo en ARS"},
+          {name:"available",type:"boolean",req:true,desc:"Estado de disponibilidad"},
+        ],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Producto actualizado"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+          {code:"404",cls:"code-4",desc:"Producto no encontrado"},
+        ],
+        example:`{ "name": "Milanesa napolitana", "pricePerKg": 9800, "available": true }`
+      },
+      {method:"PATCH",path:"/products/:id/availability",summary:"Cambiar disponibilidad",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID del producto (path param)"}],
+        body:[{name:"available",type:"boolean",req:true,desc:"true = activo, false = inactivo"}],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Estado actualizado"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:`{ "available": false }`
+      },
+      {method:"DELETE",path:"/products/:id",summary:"Eliminar producto",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID del producto (path param)"}],
+        body:[],
+        responses:[
+          {code:"204",cls:"code-2",desc:"Producto eliminado (soft delete)"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+          {code:"404",cls:"code-4",desc:"Producto no encontrado"},
+        ],
+        example:null
+      },
+    ]
+  },
+  {
+    tag:"Categorías", icon:"ti-tag", color:"#185FA5",
+    endpoints:[
+      {method:"GET",path:"/categories",summary:"Listar categorías",auth:false,
+        params:[],body:[],
+        responses:[{code:"200",cls:"code-2",desc:"Array de Category[]"}],
+        example:null
+      },
+      {method:"POST",path:"/categories",summary:"Crear categoría",auth:true,
+        params:[],
+        body:[
+          {name:"name",type:"string",req:true,desc:"Nombre visible"},
+          {name:"slug",type:"string",req:true,desc:"URL-friendly (ej: viandas-congelar)"},
+          {name:"sortOrder",type:"number",req:false,desc:"Posición en el menú (default: 0)"},
+        ],
+        responses:[
+          {code:"201",cls:"code-2",desc:"Categoría creada"},
+          {code:"400",cls:"code-4",desc:"Slug duplicado u otros errores"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:`{ "name": "Viandas para congelar", "slug": "viandas-congelar", "sortOrder": 1 }`
+      },
+      {method:"PUT",path:"/categories/:id",summary:"Actualizar categoría",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID de la categoría"}],
+        body:[
+          {name:"name",type:"string",req:true,desc:"Nombre visible"},
+          {name:"sortOrder",type:"number",req:false,desc:"Nuevo orden"},
+        ],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Categoría actualizada"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:null
+      },
+      {method:"DELETE",path:"/categories/:id",summary:"Eliminar categoría",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID de la categoría"}],
+        body:[],
+        responses:[
+          {code:"204",cls:"code-2",desc:"Eliminada"},
+          {code:"409",cls:"code-4",desc:"Tiene productos asociados"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:null
+      },
+    ]
+  },
+  {
+    tag:"Pedidos", icon:"ti-shopping-cart", color:"#D85A30",
+    endpoints:[
+      {method:"POST",path:"/orders",summary:"Crear pedido",auth:true,
+        params:[],
+        body:[
+          {name:"items",type:"OrderItem[]",req:true,desc:"Array de ítems (productId + quantity)"},
+          {name:"deliveryAddress",type:"string",req:true,desc:"Dirección de entrega"},
+          {name:"paymentMethod",type:"enum",req:true,desc:"cash | transfer"},
+          {name:"notes",type:"string",req:false,desc:"Notas para el negocio"},
+        ],
+        responses:[
+          {code:"201",cls:"code-2",desc:"Pedido creado. Devuelve objeto Order completo"},
+          {code:"400",cls:"code-4",desc:"Producto no disponible o cantidad inválida"},
+          {code:"401",cls:"code-4",desc:"No autenticado"},
+        ],
+        example:`{ "items": [{ "productId": "uuid-abc", "quantity": 1.5 }], "deliveryAddress": "Av. San Martín 500, Mendoza", "paymentMethod": "transfer" }`
+      },
+      {method:"GET",path:"/orders",summary:"Mis pedidos",auth:true,
+        params:[
+          {name:"status",type:"string",req:false,desc:"Filtrar por estado (pending, delivered, etc.)"},
+          {name:"page",type:"number",req:false,desc:"Paginación (default: 1)"},
+          {name:"limit",type:"number",req:false,desc:"Items por página (default: 10)"},
+        ],
+        body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"{ data: Order[], total, page, totalPages }"},
+          {code:"401",cls:"code-4",desc:"No autenticado"},
+        ],
+        example:null
+      },
+      {method:"GET",path:"/orders/:id",summary:"Detalle de pedido",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID del pedido"}],
+        body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Objeto Order con items completos"},
+          {code:"403",cls:"code-4",desc:"Pedido de otro usuario (no admin)"},
+          {code:"404",cls:"code-4",desc:"Pedido no encontrado"},
+        ],
+        example:null
+      },
+      {method:"PATCH",path:"/orders/:id/status",summary:"Actualizar estado del pedido",auth:true,
+        params:[{name:"id",type:"string (uuid)",req:true,desc:"ID del pedido"}],
+        body:[
+          {name:"status",type:"enum",req:true,desc:"confirmed | preparing | delivered | cancelled"},
+          {name:"reason",type:"string",req:false,desc:"Motivo (requerido si status=cancelled)"},
+        ],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Estado actualizado"},
+          {code:"400",cls:"code-4",desc:"Transición de estado inválida"},
+          {code:"403",cls:"code-4",desc:"Solo admin (excepto cancelar pedido propio)"},
+        ],
+        example:`{ "status": "confirmed" }`
+      },
+      {method:"GET",path:"/orders/admin/all",summary:"Todos los pedidos (admin)",auth:true,
+        params:[
+          {name:"status",type:"string",req:false,desc:"Filtrar por estado"},
+          {name:"date",type:"string",req:false,desc:"Filtrar por fecha (YYYY-MM-DD)"},
+          {name:"page",type:"number",req:false,desc:"Paginación"},
+        ],
+        body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Lista paginada de todos los pedidos"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:null
+      },
+    ]
+  },
+  {
+    tag:"Usuarios", icon:"ti-users", color:"#993556",
+    endpoints:[
+      {method:"GET",path:"/users/me",summary:"Perfil del usuario autenticado",auth:true,
+        params:[],body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Objeto User del token"},
+          {code:"401",cls:"code-4",desc:"No autenticado"},
+        ],
+        example:null
+      },
+      {method:"PUT",path:"/users/me",summary:"Actualizar perfil propio",auth:true,
+        params:[],
+        body:[
+          {name:"name",type:"string",req:false,desc:"Nuevo nombre"},
+          {name:"phone",type:"string",req:false,desc:"Nuevo teléfono"},
+          {name:"address",type:"string",req:false,desc:"Dirección por defecto"},
+        ],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Perfil actualizado"},
+          {code:"400",cls:"code-4",desc:"Datos inválidos"},
+        ],
+        example:`{ "phone": "2614559988", "address": "Belgrano 1200, Godoy Cruz" }`
+      },
+      {method:"PUT",path:"/users/me/password",summary:"Cambiar contraseña",auth:true,
+        params:[],
+        body:[
+          {name:"currentPassword",type:"string",req:true,desc:"Contraseña actual"},
+          {name:"newPassword",type:"string",req:true,desc:"Nueva contraseña (mín. 8 chars)"},
+        ],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Contraseña actualizada"},
+          {code:"400",cls:"code-4",desc:"Contraseña actual incorrecta"},
+        ],
+        example:null
+      },
+      {method:"GET",path:"/users",summary:"Listar usuarios (admin)",auth:true,
+        params:[
+          {name:"page",type:"number",req:false,desc:"Paginación"},
+          {name:"search",type:"string",req:false,desc:"Buscar por nombre o email"},
+        ],
+        body:[],
+        responses:[
+          {code:"200",cls:"code-2",desc:"Lista paginada de usuarios"},
+          {code:"403",cls:"code-4",desc:"Solo admin"},
+        ],
+        example:null
+      },
+    ]
+  },
+];
+
+const methodClass = {GET:"m-get",POST:"m-post",PUT:"m-put",PATCH:"m-patch",DELETE:"m-delete"};
+const container = document.getElementById("sections");
+
+data.forEach((section, si) => {
+  const sec = document.createElement("div");
+  sec.className = "section";
+
+  const hdr = document.createElement("div");
+  hdr.className = "section-header";
+  hdr.innerHTML = `<i class="ti ${section.icon}" style="font-size:16px;color:${section.color}" aria-hidden="true"></i><span class="tag-label">${section.tag}</span><span class="tag-count">${section.endpoints.length} endpoints</span><i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>`;
+
+  const list = document.createElement("div");
+  list.className = "endpoints-list";
+
+  section.endpoints.forEach((ep, ei) => {
+    const epDiv = document.createElement("div");
+    epDiv.className = "ep";
+
+    const row = document.createElement("div");
+    row.className = "ep-row";
+    row.innerHTML = `<span class="method ${methodClass[ep.method]}">${ep.method}</span><span class="ep-path">${ep.path}</span><span class="ep-summary">${ep.summary}</span>`;
+
+    const detail = document.createElement("div");
+    detail.className = "ep-detail open";
+
+    let paramHtml = "";
+    if(ep.params.length > 0){
+      paramHtml += `<div class="detail-block"><div class="detail-title">Parámetros</div>`;
+      ep.params.forEach(p => {
+        paramHtml += `<div class="param-row"><span class="param-name">${p.name}</span><span class="param-type">${p.type}</span><span class="${p.req ? 'param-req':'param-opt'}">${p.req ? 'requerido':'opcional'}</span><span class="param-desc">${p.desc}</span></div>`;
+      });
+      paramHtml += `</div>`;
+    }
+
+    let bodyHtml = "";
+    if(ep.body.length > 0){
+      bodyHtml += `<div class="detail-block"><div class="detail-title">Body (JSON)</div>`;
+      ep.body.forEach(p => {
+        bodyHtml += `<div class="param-row"><span class="param-name">${p.name}</span><span class="param-type">${p.type}</span><span class="${p.req ? 'param-req':'param-opt'}">${p.req ? 'requerido':'opcional'}</span><span class="param-desc">${p.desc}</span></div>`;
+      });
+      bodyHtml += `</div>`;
+    }
+
+    let respHtml = `<div class="detail-block"><div class="detail-title">Respuestas</div>`;
+    ep.responses.forEach(r => {
+      respHtml += `<div class="resp-row"><span class="resp-code ${r.cls}">${r.code}</span><span class="resp-desc">${r.desc}</span></div>`;
+    });
+    respHtml += `</div>`;
+
+    let authHtml = ep.auth ? `<div style="margin-bottom:8px"><span class="auth-badge"><i class="ti ti-lock" style="font-size:12px" aria-hidden="true"></i> Requiere Bearer token</span></div>` : `<div style="margin-bottom:8px"><span class="auth-badge" style="background:#E1F5EE;color:#0F6E56"><i class="ti ti-lock-open" style="font-size:12px" aria-hidden="true"></i> Público</span></div>`;
+
+    let exampleHtml = ep.example ? `<div class="detail-block detail-block-full"><div class="detail-title">Ejemplo de body</div><div class="schema-block">${ep.example}</div></div>` : "";
+
+    let hasLeft = paramHtml || bodyHtml;
+    let gridContent = hasLeft ? `${paramHtml}${bodyHtml}${respHtml}${exampleHtml}` : `${respHtml}${exampleHtml}`;
+
+    detail.innerHTML = authHtml + `<div class="detail-grid">${gridContent}</div>`;
+
+    row.addEventListener("click", () => {
+      detail.classList.toggle("open");
+    });
+
+    epDiv.appendChild(row);
+    epDiv.appendChild(detail);
+    list.appendChild(epDiv);
+  });
+
+  hdr.addEventListener("click", () => {
+    const isOpen = list.style.display !== "none";
+    list.style.display = isOpen ? "none" : "block";
+    hdr.querySelector(".chevron").classList.toggle("open", !isOpen);
+  });
+
+  sec.appendChild(hdr);
+  sec.appendChild(list);
+  container.appendChild(sec);
+});
+</script>
+</div>
+</body>
+</html>
